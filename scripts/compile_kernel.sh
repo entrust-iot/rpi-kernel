@@ -90,6 +90,12 @@ function setup_linux_kernel_sources () {
   rm -f $LINUX_KERNEL/.version
 }
 
+function patchSourcesForI2c () {
+  echo "### Patch Raspberry Pi Linux Kernel at ${LINUX_KERNEL} to load i2c"
+  cd $LINUX_KERNEL
+  patch -p1 < $SRC_DIR/patches/Raspberry_Pi_2_Automatic_TPM_Driver_Load.patch
+}
+
 function setup_rpi_firmware () {
   echo "### Check if Raspberry Pi Firmware repository at ${LINUX_KERNEL} is still up to date"
   clone_or_update_repo_for 'https://github.com/RPi-Distro/firmware' $RASPBERRY_FIRMWARE ""
@@ -99,6 +105,7 @@ function prepare_kernel_building () {
   setup_build_dirs
   setup_arm_cross_compiler_toolchain
   setup_linux_kernel_sources
+  patchSourcesForI2c
   setup_rpi_firmware
 }
 

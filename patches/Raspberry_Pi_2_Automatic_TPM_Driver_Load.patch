@@ -1,0 +1,18 @@
+diff --git a/arch/arm/boot/dts/bcm2709-rpi-2-b.dts b/arch/arm/boot/dts/bcm2709-rpi-2-b.dts
+index c703448..078d860 100644
+--- a/arch/arm/boot/dts/bcm2709-rpi-2-b.dts
++++ b/arch/arm/boot/dts/bcm2709-rpi-2-b.dts
+@@ -79,7 +79,12 @@
+ &i2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_pins>;
+-	clock-frequency = <100000>;
++	clock-frequency = <400000>;
++
++	tpm_i2c_infineon@20 {
++		compatible = "infineon,slb9645tt";
++		reg = <0x20>;
++	};
+ };
+ 
+ &i2c2 {
