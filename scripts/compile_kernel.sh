@@ -37,11 +37,11 @@ BUILD_RESULTS=$BUILD_ROOT/results/kernel-$NEW_VERSION
 X64_CROSS_COMPILE_CHAIN=arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64
 
 declare -A CCPREFIX
-CCPREFIX["rpi1"]=$ARM_TOOLS/$X64_CROSS_COMPILE_CHAIN/bin/arm-linux-gnueabihf-
+#CCPREFIX["rpi1"]=$ARM_TOOLS/$X64_CROSS_COMPILE_CHAIN/bin/arm-linux-gnueabihf-
 CCPREFIX["rpi2"]=$ARM_TOOLS/$X64_CROSS_COMPILE_CHAIN/bin/arm-linux-gnueabihf-
 
 declare -A IMAGE_NAME
-IMAGE_NAME["rpi1"]=kernel.img
+#IMAGE_NAME["rpi1"]=kernel.img
 IMAGE_NAME["rpi2"]=kernel7.img
 
 function create_dir_for_build_user () {
@@ -62,9 +62,9 @@ function clone_or_update_repo_for () {
   local repo_path=$2
   local repo_commit=$3
 
-  if [ ! -z "${repo_commit}" ]; then
-    rm -rf $repo_path
-  fi
+#  if [ ! -z "${repo_commit}" ]; then
+#    rm -rf $repo_path
+#  fi
   if [ -d ${repo_path}/.git ]; then
     cd $repo_path
     git reset --hard HEAD
@@ -72,9 +72,9 @@ function clone_or_update_repo_for () {
   else
     echo "Cloning $repo_path with commit $repo_commit"
     git clone --depth 1 $repo_url $repo_path
-    if [ ! -z "${repo_commit}" ]; then
-      cd $repo_path && git checkout -qf ${repo_commit}
-    fi
+  fi
+  if [ ! -z "${repo_commit}" ]; then
+    cd $repo_path && git checkout -qf ${repo_commit}
   fi
 }
 
@@ -205,7 +205,8 @@ echo "*** the kernel timestamp is: $NEW_VERSION ***"
 echo "#############################################"
 
 # clear build cache to fetch the current raspberry/firmware
-sudo rm -fr $RASPBERRY_FIRMWARE
+#sudo rm -fr $RASPBERRY_FIRMWARE
+#cd $RASPBERRY_FIRMWARE && git clean -xf
 
 # setup necessary build environment: dir, repos, etc.
 prepare_kernel_building
